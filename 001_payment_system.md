@@ -4,168 +4,489 @@
 
 ### Functional Requirements
 
-* User should be able to **make payment**
-* Prevent **duplicate payments**
-* Support **success / failure / retry**
-* Maintain **transaction history**
+- User should be able to make a payment
+- Prevent duplicate payments
+- Support payment retries
+- Maintain transaction history
+- Notify users of payment status
+- Support refunds (optional/advanced)
 
 ### Non-Functional Requirements
 
-* High reliability (no money loss ❗)
-* Strong consistency
-* Secure system
+- High reliability (no money loss)
+- Strong consistency for payment records
+- High availability
+- Secure communication
+- Scalable architecture
+- Fault tolerant
 
 ---
 
-## 🔹 2. High-Level Flow
+# 🔹 2. High-Level Architecture
 
 ```
-Client → Backend → Payment Gateway → Bank
-                    ↓
-                 Webhook
-                    ↓
-                 Backend → DB
+                +----------------+
+                |     Client     |
+                +----------------+
+                        |
+                        v
+                +----------------+
+                |   API Server   |
+                +----------------+
+                        |
+             +----------+----------+
+             |                     |
+             v                     v
+      +-------------+      +---------------+
+      | Payment DB  |      | Background Job|
+      +-------------+      |   (Sidekiq)   |
+             |             +---------------+
+             |                     |
+             +----------+----------+
+                        |
+                        v
+              +--------------------+
+              | Payment Gateway    |
+              | (Stripe/Razorpay)  |
+              +--------------------+
+                        |
+                        v
+                    Bank/Card
+                        |
+                        v
+                   Webhook Event
+                        |
+                        v
+                +----------------+
+                |   API Server   |
+                +----------------+
+                        |
+                        v
+                  Update Database
 ```
 
 ---
 
-## 🔹 3. Key Components
+# 🔹 3. Payment Flow
 
-### 1. Payment Service (Backend)
-
-* Creates payment
-* Stores status
-* Communicates with payment gateway
-
-### 2. Payment Gateway
-
-* External service (e.g., Stripe)
-* Handles actual money transfer
-
-### 3. Database
-
-Stores:
-
-* transaction_id
-* user_id
-* amount
-* status (pending, success, failed)
-
-### 4. Webhooks
-
-* Gateway notifies backend about payment status
-
----
-
-## 🔹 4. Idempotency (🔥 Most Important)
-
-### Problem:
-
-User clicks "Pay" multiple times → multiple charges
-
-### Solution:
-
-Use **Idempotency Key**
-
-```ruby
-if payment_exists?(idempotency_key)
-  return existing_payment
-else
-  create_payment
-end
+```
+User clicks Pay
+        ↓
+Backend creates payment
+        ↓
+Generate idempotency key
+        ↓
+Call Payment Gateway
+        ↓
+Gateway processes payment
+        ↓
+User may close browser
+        ↓
+Gateway sends webhook
+        ↓
+Backend updates payment status
+        ↓
+Client fetches latest status
 ```
 
-👉 Same request = same result (no duplicate payment)
+---
+
+# 🔹 4. Core Components
+
+## API Server
+
+Responsible for
+
+- Creating payments
+- Validating requests
+- Calling payment gateway
+- Handling webhooks
+- Returning payment status
 
 ---
 
-## 🔹 5. Database Design
+## Payment Gateway
+
+Responsible for
+
+- Processing payment
+- Tokenizing card information
+- Communicating with banks
+- Sending webhook events
+
+Examples
+
+- Stripe
+- Razorpay
+- PayPal
+
+---
+
+## Database
+
+Stores
+
+- Payment information
+- Transaction status
+- Gateway transaction IDs
+- Idempotency keys
+
+---
+
+## Background Workers (Sidekiq)
+
+Used for
+
+- Retry logic
+- Notifications
+- Reconciliation jobs
+- Non-blocking tasks
+
+---
+
+# 🔹 5. Database Design
 
 ```sql
 payments
 --------
+
 id
 user_id
+order_id
 amount
+currency
 status
-idempotency_key (unique)
+gateway_transaction_id
+idempotency_key
+failure_reason
 created_at
+updated_at
 ```
 
-👉 Add **unique index on idempotency_key**
-
----
-
-## 🔹 6. Payment States
+Indexes
 
 ```
-created → pending → success / failed
+UNIQUE(idempotency_key)
+
+INDEX(user_id)
+
+INDEX(order_id)
+
+INDEX(status)
 ```
 
 ---
 
-## 🔹 7. Failure Handling
+# 🔹 6. Payment State Machine
 
-### Cases:
+```
+created
+    ↓
+processing
+    ↓
+success
 
-* Payment success but response lost
-* Payment failed but retry needed
+or
 
-### Solution:
+created
+    ↓
+processing
+    ↓
+failed
+```
 
-* Use **webhooks as source of truth**
-* Retry failed payments safely
+Some gateways also support
 
----
-
-## 🔹 8. Security
-
-* Use HTTPS
-* Do not store raw card details
-* Use tokenization via gateway
-
----
-
-## 🔹 9. Scaling
-
-* Use background jobs (Sidekiq)
-* Use DB indexing
-* Cache where needed
-
----
-
-## 🔹 10. Advanced Concepts
-
-### Race Conditions
-
-* Use DB constraints (unique index)
-
-### Double Spending
-
-* Prevent using idempotency + locking
-
-### Reconciliation
-
-* Match DB records with bank records
+```
+authorized
+      ↓
+captured
+      ↓
+refunded
+```
 
 ---
 
-## 🔹 11. Final Architecture
+# 🔹 7. Idempotency (Most Important)
+
+## Problem
+
+User clicks Pay button multiple times.
+
+Without protection
+
+```
+Request 1 → Charge ₹100
+
+Request 2 → Charge ₹100
+
+Result = ₹200 charged
+```
+
+## Solution
+
+Generate an idempotency key.
+
+```
+abc123
+
+↓
+
+Store in database
+
+↓
+
+Unique index
+
+↓
+
+Same key returns same payment
+```
+
+Example
+
+```ruby
+payment = Payment.find_by(idempotency_key: key)
+
+return payment if payment.present?
+
+Payment.create!(
+  idempotency_key: key,
+  amount: amount
+)
+```
+
+Benefits
+
+- Prevent duplicate payments
+- Safe retries
+- Handles network failures
+
+---
+
+# 🔹 8. Webhooks
+
+Webhooks are the source of truth.
+
+Example
+
+```
+User pays
+
+↓
+
+Gateway processing
+
+↓
+
+User closes browser
+
+↓
+
+Gateway finishes payment
+
+↓
+
+Gateway sends webhook
+
+↓
+
+Backend updates payment
+
+↓
+
+Client sees SUCCESS
+```
+
+Always verify webhook signatures before processing.
+
+---
+
+# 🔹 9. Failure Handling
+
+Possible failures
+
+- Network timeout
+- User refreshes page
+- Gateway unavailable
+- Response lost
+- Duplicate requests
+
+Solutions
+
+- Retry with same idempotency key
+- Webhook confirmation
+- Background retry jobs
+- Database constraints
+
+---
+
+# 🔹 10. Concurrency & Race Conditions
+
+Possible issue
+
+Two requests reach the server simultaneously.
+
+Solutions
+
+- Unique index
+- Database transactions
+- Row locking (SELECT ... FOR UPDATE)
+- Optimistic locking where appropriate
+
+---
+
+# 🔹 11. Security
+
+- HTTPS
+- Never store raw card details
+- Tokenization by payment gateway
+- Verify webhook signatures
+- Encrypt sensitive information
+- Authentication & authorization
+
+---
+
+# 🔹 12. Scaling
+
+- Multiple API servers
+- Background workers (Sidekiq)
+- Database indexing
+- Read replicas (if needed)
+- Horizontal scaling
+- Load balancer
+
+---
+
+# 🔹 13. Reconciliation
+
+Sometimes
+
+Gateway = SUCCESS
+
+Database = FAILED
+
+Periodic reconciliation job
+
+```
+Database
+
+↓
+
+Gateway API
+
+↓
+
+Compare
+
+↓
+
+Fix mismatched records
+```
+
+This ensures financial accuracy.
+
+---
+
+# 🔹 14. Refunds (Advanced)
+
+Flow
 
 ```
 Client
-  ↓
-API Server (Rails)
-  ↓
-DB (payments)
-  ↓
-Payment Gateway (Stripe)
-  ↓
-Webhook → API → Update DB
+
+↓
+
+Refund Request
+
+↓
+
+Backend validates payment
+
+↓
+
+Gateway Refund API
+
+↓
+
+Webhook
+
+↓
+
+Refund Status Updated
+```
+
+Refunds should also use idempotency keys to avoid duplicate refunds.
+
+Support
+
+- Full refund
+- Partial refund
+
+Refund status
+
+```
+requested
+
+↓
+
+processing
+
+↓
+
+completed
+
+or
+
+failed
 ```
 
 ---
 
-## 🎯 One-Line Answer
+# 🔹 15. Interview Questions
 
-> A payment system ensures reliable and consistent transactions using idempotency keys, webhooks, and strong database constraints to prevent duplicate or failed payments.
+Q. How do you prevent duplicate payments?
+
+Answer:
+Use idempotency keys with a unique database constraint.
+
+---
+
+Q. Why use webhooks?
+
+Answer:
+Users may close the browser before payment completes. Webhooks provide the final payment status.
+
+---
+
+Q. Why not trust the frontend response?
+
+Answer:
+The frontend can lose network connectivity or be closed. The webhook is the reliable source of truth.
+
+---
+
+Q. Why use Sidekiq?
+
+Answer:
+To process retries, notifications, reconciliation, and other asynchronous tasks without blocking API requests.
+
+---
+
+Q. What happens if the webhook is received twice?
+
+Answer:
+Webhook processing should be idempotent. Ignore duplicate events that have already been processed.
+
+---
+
+Q. How do you avoid double spending?
+
+Answer:
+Use idempotency keys, unique constraints, transactions, and row locking.
+
+---
+
+# 🔹 16. One-Line Summary
+
+> A payment system ensures reliable and secure transactions using idempotency keys, database constraints, asynchronous webhooks, retries, reconciliation, and background workers while maintaining strong consistency for payment records.
