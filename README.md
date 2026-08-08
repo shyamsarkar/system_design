@@ -1,224 +1,671 @@
 # System Design Roadmap
 
-## High-Level Design (HLD)
+# High-Level Design (HLD)
 
-### Step 1: Fundamentals
-- **Serverless vs Serverful**
-- **Horizontal vs Vertical Scaling**
-- **Threads & Processes**
-- **Memory Management (Paging, Caching basics)**
+## Step 1: Fundamentals
+
 - **How does the Internet work?**
+  - DNS
+  - IP
+  - TCP/IP basics
+  - Routing basics
+- **HTTP & HTTPS**
+  - HTTP request/response
+  - HTTP Methods (HTTP Verbs)
+  - Status codes
+  - Cookies
+  - Headers
+  - Keep-alive
+- **Processes vs Threads**
+- **Concurrency vs Parallelism**
+- **Horizontal vs Vertical Scaling**
+- **Stateless vs Stateful Applications**
+- **Latency vs Throughput**
+- **Availability, Reliability & Scalability**
+- **Serverful vs Serverless** *(Optional — Later)*
 
 ---
 
-### Step 2: Databases & Storage
-- **SQL vs NoSQL Databases**
-- **In-memory Databases**
-- **Data Replication & Migration**
-- **Data Partitioning & Sharding**
-- **Indexing (B-Tree, Hash Index)**
-- **Query Optimization**
-- **Blob/Object Storage (S3, GCS)**
-- **File Systems (HDFS, Distributed FS)**
-- **Hot vs Cold Storage**
+## Step 2: Load Balancing & Traffic Management
 
----
-
-### Step 3: Distributed Systems Basics
-- **CAP Theorem**
-- **Consistency & Its Levels**
-- **Isolation Levels**
-- **Leader Election**
-- **Consensus Algorithms (Raft, Paxos - high level)**
-- **Distributed Locks**
-
----
-
-### Step 4: Caching
-- **What is Cache? (Redis, Memcached)**
-- **Write Policies:**
-  - Write-back  
-  - Write-through  
-  - Write-around  
-- **Replacement Policies:**
-  - LFU  
-  - LRU  
-  - Segmented LRU  
-- **Cache Invalidation**
-- **Content Delivery Networks (CDNs)**
-
----
-
-### Step 5: Networking
-- **TCP vs UDP**
-- **HTTP (1/2/3) & HTTPS**
-- **WebSockets**
-- **WebRTC & Video Streaming**
-
----
-
-### Step 6: API & Service Communication
-- **API Gateway**
-- **REST vs gRPC**
-- **Service Discovery**
-
----
-
-### Step 7: Load Balancers
-- **Load Balancing Algorithms (Stateless & Stateful)**
-- **Consistent Hashing**
-- **Proxy & Reverse Proxy**
+- **Reverse Proxy**
+- **Forward Proxy** *(Optional — Later)*
+- **Load Balancer**
+- **Layer 4 vs Layer 7 Load Balancing**
+- **Load Balancing Algorithms**
+  - Round Robin
+  - Least Connections
+  - IP Hash
+- **Health Checks**
+- **Sticky Sessions**
 - **Rate Limiting**
+  - Fixed Window
+  - Sliding Window
+  - Token Bucket
+  - Leaky Bucket
+- **Consistent Hashing**
 
 ---
 
-### Step 8: Message Queues & Data Processing
-- **Asynchronous Processing (Kafka, RabbitMQ)**
-- **Publisher–Subscriber Model**
-- **Stream Processing (Kafka Streams, Flink basics)**
-- **Batch vs Stream Processing**
+## Step 3: Databases & Storage
 
----
-
-### Step 9: Fault Tolerance & Reliability
-- **Retries & Exponential Backoff**
-- **Circuit Breaker**
-- **Idempotency**
-- **Graceful Degradation**
-- **Avoiding Cascading Failures**
-
----
-
-### Step 10: Monoliths vs Microservices
-- **Why Microservices?**
-- **Migration to Microservices**
-- **Containerization (Docker)**
-
----
-
-### Step 11: Monitoring & Logging
-- **Logging Events**
-- **Monitoring Metrics**
-- **Alerting Systems**
-- **Anomaly Detection**
-
----
-
-### Step 12: Security
-- **Authentication vs Authorization**
-- **JWT & Token-based Authentication**
-- **SSO & OAuth**
-- **Access Control Lists (ACL)**
-- **Encryption (At Rest & In Transit)**
-- **Basic OWASP (CSRF, XSS)**
-
----
-
-### Step 13: System Design Trade-offs
-- **Consistency vs Availability**
 - **SQL vs NoSQL**
-- **Push vs Pull Architecture**
-- **Memory vs Latency**
-- **Throughput vs Latency**
+- **Relational Database Fundamentals**
+- **Database Schema Design**
+- **Normalization vs Denormalization**
+- **Indexes**
+  - B-Tree
+  - Hash
+  - Composite Index
+  - Covering Index *(Optional — Later)*
+- **Query Optimization**
+- **Transactions & ACID**
+- **Isolation Levels**
+- **Locks & Deadlocks**
+- **Optimistic vs Pessimistic Locking**
+- **Database Replication**
+  - Primary/Replica
+  - Read Replicas
+  - Replication Lag
+- **Database Partitioning**
+- **Sharding**
+- **Hot Partitions / Hotspots**
+- **Data Migration**
+- **Connection Pooling**
+
+---
+
+## Step 4: Caching & CDN
+
+- **Why Caching?**
+- **Cache-aside**
+- **Write-through**
+- **Write-back**
+- **Write-around**
+- **Cache Invalidation**
+- **TTL**
+- **Cache Eviction**
+  - LRU
+  - LFU
+- **Cache Stampede / Thundering Herd**
+- **Hot Keys**
+- **Distributed Caching**
+- **Redis vs Memcached**
+- **CDN**
+- **Edge Caching**
+
+---
+
+## Step 5: Object & File Storage
+
+- **Block vs File vs Object Storage**
+- **Object Storage**
+  - S3
+  - GCS
+- **Large File Uploads**
+- **Multipart Upload**
+- **Pre-signed URLs**
+- **File Metadata**
+- **Hot vs Cold Storage**
+- **Storage Lifecycle Policies**
+
+### Optional — Later
+
+- **Distributed File Systems**
+  - HDFS
+  - Ceph
+  - GlusterFS
+- **Advanced Storage Architecture**
+
+---
+
+## Step 6: Distributed Systems Fundamentals
+
+- **CAP Theorem**
+- **Consistency**
+  - Strong Consistency
+  - Eventual Consistency
+  - Read-after-write Consistency
+- **Replication**
+- **Leader / Follower**
+- **Quorum**
+- **Leader Election**
+- **Consensus**
+  - Raft — high level
+  - Paxos — high level
+- **Distributed Locks**
+- **Distributed Transactions**
+  - Two-Phase Commit — high level
+  - Saga Pattern
+- **Clock & Ordering Problems**
+  - Logical Clocks — basic understanding
+
+### Optional — Later
+
+- **Vector Clocks**
+- **Lamport Clocks — deeper study**
+- **Byzantine Fault Tolerance**
+- **Advanced Consensus Algorithms**
+
+---
+
+## Step 7: API & Service Communication
+
+- **REST**
+- **gRPC**
+- **API Gateway**
+- **Service Discovery**
+- **Synchronous vs Asynchronous Communication**
+- **Request Timeouts**
+- **Connection Pooling**
+- **API Versioning**
+- **Pagination**
+- **Idempotency**
+- **API Rate Limiting**
+
+### Optional — Later
+
+- **GraphQL**
+- **GraphQL Federation**
+- **Advanced Service Mesh Concepts**
+
+---
+
+## Step 8: Message Queues & Event-Driven Systems
+
+- **Why Message Queues?**
+- **Producer / Consumer**
+- **Queue vs Pub/Sub**
+- **Kafka**
+- **RabbitMQ**
+- **SQS — conceptual**
+- **Message Ordering**
+- **Message Delivery Guarantees**
+  - At-most-once
+  - At-least-once
+  - Exactly-once — practical limitations
+- **Retries**
+- **Dead Letter Queues**
+- **Consumer Groups**
+- **Backpressure**
+- **Event-Driven Architecture**
+
+### Optional — Later
+
+- **Event Sourcing**
+- **CQRS**
+- **Kafka Streams**
+- **Apache Flink**
+- **Advanced Stream Processing**
+- **Advanced Event-Driven Architecture**
+
+---
+
+## Step 9: Reliability & Fault Tolerance
+
+- **Timeouts**
+- **Retries**
+- **Exponential Backoff**
+- **Jitter**
+- **Circuit Breaker**
+- **Bulkheads**
+- **Health Checks**
+- **Graceful Degradation**
+- **Failover**
+- **Cascading Failures**
+- **Load Shedding**
+- **Backpressure**
+- **Idempotency**
+- **Disaster Recovery**
+- **Backup & Restore**
+- **RPO**
+- **RTO**
+
+---
+
+## Step 10: Scalability & Architecture
+
+- **Monolith**
+- **Modular Monolith**
+- **Microservices**
+- **Service Boundaries**
+- **Database-per-Service**
+- **Shared Database**
+- **Microservice Communication**
+- **Distributed Transactions**
+- **Event-Driven Architecture**
+- **Strangler Fig Pattern**
+- **Containerization**
+  - Docker
+
+### Optional — Later
+
+- **Kubernetes**
+- **Container Orchestration**
+- **Service Mesh**
+- **Sidecar Pattern**
+- **Advanced Microservice Deployment Strategies**
+
+---
+
+## Step 11: Search & Specialized Infrastructure
+
+- **Search Engines**
+  - Elasticsearch / OpenSearch
+- **Inverted Index**
+- **Full-text Search**
+- **Autocomplete**
+- **Geospatial Search**
+- **Distributed Counters**
+- **Unique ID Generation**
+  - UUID
+  - Snowflake-style IDs
+
+### Optional — Later
+
+- **Recommendation Systems**
+- **Search Ranking**
+- **Advanced Geospatial Systems**
+- **Distributed Search Internals**
+
+---
+
+## Step 12: Networking for Distributed Applications
+
+- **TCP vs UDP**
+- **HTTP/1.1 vs HTTP/2 vs HTTP/3**
+- **WebSockets**
+- **Long Polling**
+- **Server-Sent Events**
+
+### Optional — Later
+
+- **WebRTC**
+- **Video Streaming Architecture**
+- **Video Encoding / Transcoding**
+- **Adaptive Bitrate Streaming**
+- **QUIC Internals**
+- **Advanced Network Protocols**
+
+---
+
+## Step 13: Observability
+
+- **Logging**
+- **Metrics**
+- **Tracing**
+- **Distributed Tracing**
+- **Correlation IDs**
+- **Health Checks**
+- **Monitoring**
+- **Alerting**
+- **SLI**
+- **SLO**
+- **SLA**
+- **P50 / P95 / P99**
+- **Error Rate**
+- **Throughput**
+- **Latency**
+
+### Optional — Later
+
+- **Anomaly Detection**
+- **Advanced Distributed Tracing**
+- **Log Aggregation Internals**
+- **Advanced Observability Platforms**
+
+---
+
+## Step 14: Security
+
+- **Authentication vs Authorization**
+- **Session-based Authentication**
+- **Token-based Authentication**
+- **JWT**
+- **OAuth 2.0**
+- **OpenID Connect**
+- **SSO**
+- **RBAC**
+- **ACL**
+- **Encryption**
+  - At Rest
+  - In Transit
+- **TLS**
+- **Secrets Management**
+- **API Security**
+- **Rate Limiting**
+- **OWASP Basics**
+  - XSS
+  - CSRF
+  - SQL Injection
+  - SSRF
+- **Password Hashing**
+
+### Optional — Later
+
+- **Advanced OAuth/OIDC**
+- **mTLS**
+- **Zero Trust Architecture**
+- **Advanced Secrets Management**
+- **Advanced Cryptography**
+- **Web Application Firewall (WAF)**
+- **Advanced Security Architecture**
+
+---
+
+## Step 15: System Design Trade-offs
+
+- **Consistency vs Availability**
+- **Latency vs Throughput**
+- **Read vs Write Optimization**
+- **SQL vs NoSQL**
+- **Synchronous vs Asynchronous**
+- **Push vs Pull**
+- **Polling vs WebSockets**
+- **Strong vs Eventual Consistency**
+- **Vertical vs Horizontal Scaling**
+- **Caching vs Database Load**
 - **Accuracy vs Latency**
+- **Storage Cost vs Performance**
+- **Availability vs Cost**
+- **Complexity vs Scalability**
+- **Build vs Buy**
 
 ---
 
-### Step 14: Back-of-the-envelope Calculations
+## Step 16: Back-of-the-Envelope Calculations
+
 - **QPS Estimation**
+- **Peak QPS**
 - **Storage Estimation**
-- **Bandwidth Calculation**
+- **Bandwidth Estimation**
+- **Memory Estimation**
+- **Replication Storage**
+- **Cache Size Estimation**
+- **Capacity Planning**
+- **Latency Budget**
+
+### Basic Units
+
+- KB
+- MB
+- GB
+- TB
+- Requests/second
+- Bytes/second
+- GB/day
+- TB/year
 
 ---
 
-### Step 15: Practice Problems
+## Step 17: Real System Design Practice
+
+### Beginner
+
+- **URL Shortener**
+- **Pastebin**
+- **Rate Limiter**
+- **Notification Service**
+- **File Upload Service**
+- **Distributed ID Generator**
+
+### Intermediate
+
+- **Chat Application**
+- **Food Delivery System**
+- **Movie Ticket Booking**
+- **E-commerce System**
+- **Payment System**
+- **Ride Booking System**
+- **Google Drive / Dropbox**
+- **Social Media Feed**
+
+### Advanced
+
 - **YouTube**
-- **Twitter**
-- **WhatsApp**
-- **Uber**
-- **Amazon**
-- **Dropbox / Google Drive**
 - **Netflix**
 - **Instagram**
+- **WhatsApp**
+- **Uber**
+- **Twitter/X**
 - **Zoom**
-- **Booking.com / Airbnb**
+- **Airbnb / Booking.com**
+- **Distributed Logging System**
+- **Large-scale Notification System**
+
+### System Design Process
+
+For every problem:
+
+1. **Requirements**
+2. **Functional Requirements**
+3. **Non-functional Requirements**
+4. **Scale Estimation**
+5. **API Design**
+6. **Data Model**
+7. **High-level Architecture**
+8. **Database Choice**
+9. **Caching**
+10. **Asynchronous Processing**
+11. **Scaling**
+12. **Failure Scenarios**
+13. **Security**
+14. **Monitoring**
+15. **Trade-offs**
 
 ---
 
-## Low-Level Design (LLD)
+# Low-Level Design (LLD)
 
-### Step 1: Object-Oriented Programming (OOP)
+## Step 1: OOP & Object Design
+
 - **Encapsulation**
 - **Abstraction**
-- **Inheritance**
+- **Composition vs Inheritance**
 - **Polymorphism**
+- **Interfaces**
 - **SOLID Principles**
+- **Dependency Injection**
+- **Cohesion & Coupling**
 
 ---
 
-### Step 2: Design Patterns
-- **Creational: Singleton, Factory, etc.**
-- **Structural: Proxy, Bridge, etc.**
-- **Behavioral: Strategy, Command, Observer, etc.**
+## Step 2: Design Patterns
+
+### Creational
+
+- **Factory**
+- **Abstract Factory** *(Optional — Later)*
+- **Builder**
+- **Singleton**
+  - Understand why it can be problematic
+
+### Structural
+
+- **Adapter**
+- **Decorator**
+- **Facade**
+- **Proxy**
+- **Composite** *(Optional — Later)*
+
+### Behavioral
+
+- **Strategy**
+- **Observer**
+- **Command**
+- **State**
+- **Template Method** *(Optional — Later)*
+- **Chain of Responsibility** *(Optional — Later)*
+
+### Pattern Learning Strategy
+
+For every pattern, understand:
+
+- **Problem**
+- **Pattern**
+- **Why use it?**
+- **When not to use it?**
+- **Alternative approaches**
 
 ---
 
-### Step 3: Concurrency & Thread Safety
-- **Thread-safe Design**
-- **Locking Mechanisms**
-- **Producer–Consumer Problem**
-- **Race Conditions & Synchronization**
+## Step 3: Concurrency & Thread Safety
+
+- **Processes vs Threads**
+- **Concurrency vs Parallelism**
+- **Race Conditions**
+- **Critical Sections**
+- **Mutex / Locks**
+- **Read/Write Locks**
+- **Semaphores**
+- **Deadlocks**
+- **Thread Safety**
+- **Atomic Operations**
+- **Producer–Consumer**
+- **Thread Pools**
+- **Async Programming**
+- **Synchronization**
 
 ---
 
-### Step 4: UML & Design Modeling
-- **Class Diagrams**
-- **Sequence Diagrams**
-- **Mapping Design to Code**
+## Step 4: API & Code Design
 
----
-
-### Step 5: APIs & Code Design
 - **API Design**
 - **Request/Response Modeling**
-- **Versioning & Extensibility**
-- **Clean Code Principles (DRY, SRP)**
-- **Avoiding God Classes**
-- **Error Handling Strategy**
+- **Validation**
+- **Error Handling**
+- **API Versioning**
+- **Pagination**
+- **Idempotency**
+- **Extensibility**
+- **Dependency Injection**
 - **Configuration Management**
+- **Clean Code**
+- **DRY**
+- **SRP**
+- **Avoiding God Classes**
+- **Separation of Concerns**
 
 ---
 
-### Step 6: Database Design (LLD)
+## Step 5: Database Design
+
 - **Schema Design**
-- **Normalization vs Denormalization**
-- **Indexing in Practice**
+- **Normalization**
+- **Denormalization**
+- **Relationships**
+- **Constraints**
+- **Indexes**
+- **Transactions**
+- **Locking**
+- **Database Migrations**
 
 ---
 
-### Step 7: Testing
+## Step 6: UML & Design Modeling
+
+- **Class Diagrams**
+- **Sequence Diagrams**
+- **State Diagrams**
+- **Component Diagrams**
+- **Mapping Design → Code**
+
+### Optional — Later
+
+- **Advanced UML**
+- **Deployment Diagrams**
+- **Activity Diagrams**
+
+> Focus on communicating design clearly rather than becoming a UML specialist.
+
+---
+
+## Step 7: Testing
+
 - **Unit Testing**
+- **Integration Testing**
 - **Mocking**
-- **Integration Testing Basics**
+- **Test Doubles**
+- **Testability in Design**
+
+### Optional — Later
+
+- **Contract Testing**
+- **Property-based Testing**
+- **Mutation Testing**
+- **Advanced Test Architecture**
 
 ---
 
-### Step 8: Common LLD Problems
-- **Design Tic-Tac-Toe or Chess**
-- **Design Splitwise**
-- **Design a Parking Lot**
-- **Design an Elevator System (Multiple Lifts)**
-- **Design a Notification System**
-- **Design a Food Delivery App**
-- **Design a Movie Ticket Booking System**
-- **Design a URL Shortener**
-- **Design a Logging Framework**
-- **Design a Rate Limiter**
+## Step 8: LLD Practice Problems
+
+### Beginner
+
+- **Tic-Tac-Toe**
+- **Parking Lot**
+- **Elevator**
+- **Library Management**
+
+### Intermediate
+
+- **Splitwise**
+- **Movie Ticket Booking**
+- **Food Delivery**
+- **Notification System**
+- **ATM**
+- **Vending Machine**
+
+### Advanced
+
+- **Rate Limiter**
+- **Logging Framework**
+- **Task Scheduler**
+- **Message Queue**
+- **Payment System**
+- **File Storage System**
 
 ---
 
-## Execution Strategy
-- Learn → Implement small version → Design large-scale system
-- Revise each topic with 1 real-world example
-- Focus on "Why" over "What"
-- Practice consistently with real systems
+# Execution Strategy
+
+- **Learn → Implement a small version → Design a large-scale version**
+- **Understand "Why" before "What"**
+- **For every technology, understand the problem it solves**
+- **For every architecture, understand its trade-offs**
+- **Use real-world systems as examples**
+- **Practice designing systems from requirements**
+- **Use your own projects to practice scaling**
+
+## Recommended Mindset
+
+Don't learn system design as:
+
+> "I need to know Redis, Kafka, Kubernetes, Cassandra, etc."
+
+Learn it as:
+
+> **"I have a problem. What constraints does it have? What architecture solves it? What are the trade-offs?"**
+
+## Before Designing Any System
+
+Ask:
+
+- Who are the users?
+- What operations are required?
+- How much traffic?
+- How much data?
+- What latency is expected?
+- What availability is required?
+- What consistency is required?
+- What are the failure scenarios?
+- What are the security requirements?
+- What are the cost constraints?
+
+Then define:
+
+- **Functional Requirements**
+- **Non-functional Requirements**
+- **Scale**
+- **Constraints**
+
+Only then design the architecture.
