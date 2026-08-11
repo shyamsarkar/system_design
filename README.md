@@ -402,10 +402,10 @@
 
 ### Beginner
 
-- **URL Shortener**
+- **✅ URL Shortener**
 - **Pastebin**
 - **Rate Limiter**
-- **Notification Service**
+- **✅ Notification Service**
 - **File Upload Service**
 - **Distributed ID Generator**
 
@@ -415,7 +415,7 @@
 - **Food Delivery System**
 - **Movie Ticket Booking**
 - **E-commerce System**
-- **Payment System**
+- **✅ Payment System**
 - **Ride Booking System**
 - **Google Drive / Dropbox**
 - **Social Media Feed**
