@@ -9,6 +9,7 @@
   - IP
   - TCP/IP basics
   - Routing basics
+
 - **HTTP & HTTPS**
   - HTTP request/response
   - HTTP Methods (HTTP Verbs)
@@ -16,6 +17,8 @@
   - Cookies
   - Headers
   - Keep-alive
+  - HTTP/1.1 vs HTTP/2 vs HTTP/3
+
 - **Processes vs Threads**
 - **Concurrency vs Parallelism**
 - **Horizontal vs Vertical Scaling**
@@ -23,6 +26,7 @@
 - **Latency vs Throughput**
 - **Availability, Reliability & Scalability**
 - **Serverful vs Serverless** *(Optional — Later)*
+
 
 ---
 
@@ -36,6 +40,7 @@
   - Round Robin
   - Least Connections
   - IP Hash
+
 - **Health Checks**
 - **Sticky Sessions**
 - **Rate Limiting**
@@ -43,7 +48,9 @@
   - Sliding Window
   - Token Bucket
   - Leaky Bucket
+
 - **Consistent Hashing**
+
 
 ---
 
@@ -51,27 +58,36 @@
 
 - **SQL vs NoSQL**
 - **Relational Database Fundamentals**
-- **Database Schema Design**
+- **Schema Design**
 - **Normalization vs Denormalization**
 - **Indexes**
   - B-Tree
   - Hash
   - Composite Index
   - Covering Index *(Optional — Later)*
+
 - **Query Optimization**
 - **Transactions & ACID**
 - **Isolation Levels**
+- **MVCC**
 - **Locks & Deadlocks**
 - **Optimistic vs Pessimistic Locking**
+- **Hot Rows / Contention**
 - **Database Replication**
   - Primary/Replica
   - Read Replicas
   - Replication Lag
+  - Read/Write Splitting
+
 - **Database Partitioning**
 - **Sharding**
 - **Hot Partitions / Hotspots**
+- **Data Locality**
 - **Data Migration**
+- **Online Schema Changes**
 - **Connection Pooling**
+- **Write-Ahead Logging (WAL)** *(Conceptual)*
+
 
 ---
 
@@ -87,12 +103,14 @@
 - **Cache Eviction**
   - LRU
   - LFU
+
 - **Cache Stampede / Thundering Herd**
 - **Hot Keys**
 - **Distributed Caching**
 - **Redis vs Memcached**
 - **CDN**
 - **Edge Caching**
+
 
 ---
 
@@ -102,6 +120,7 @@
 - **Object Storage**
   - S3
   - GCS
+
 - **Large File Uploads**
 - **Multipart Upload**
 - **Pre-signed URLs**
@@ -117,15 +136,44 @@
   - GlusterFS
 - **Advanced Storage Architecture**
 
+
 ---
 
-## Step 6: Distributed Systems Fundamentals
+## Step 6: Architecture Patterns
+
+- **Client-Server Architecture**
+- **Layered Architecture**
+- **N-Tier Architecture**
+- **Monolith**
+- **Modular Monolith**
+- **Microservices**
+- **Service Boundaries**
+- **Database-per-Service**
+- **Shared Database**
+- **API Gateway**
+- **Backend for Frontend (BFF)**
+- **Event-Driven Architecture**
+- **Pub/Sub**
+- **Pipe & Filter**
+- **Strangler Fig Pattern**
+- **Sidecar Pattern**
+
+### Optional — Later
+
+- **Advanced Microservice Deployment Patterns**
+- **Service Mesh Architecture**
+
+
+---
+
+## Step 7: Distributed Systems Fundamentals
 
 - **CAP Theorem**
 - **Consistency**
   - Strong Consistency
   - Eventual Consistency
   - Read-after-write Consistency
+
 - **Replication**
 - **Leader / Follower**
 - **Quorum**
@@ -133,10 +181,15 @@
 - **Consensus**
   - Raft — high level
   - Paxos — high level
+
 - **Distributed Locks**
 - **Distributed Transactions**
   - Two-Phase Commit — high level
   - Saga Pattern
+
+- **Network Partitions**
+- **Split Brain**
+- **Failure Detection**
 - **Clock & Ordering Problems**
   - Logical Clocks — basic understanding
 
@@ -147,9 +200,10 @@
 - **Byzantine Fault Tolerance**
 - **Advanced Consensus Algorithms**
 
+
 ---
 
-## Step 7: API & Service Communication
+## Step 8: API & Service Communication
 
 - **REST**
 - **gRPC**
@@ -161,7 +215,10 @@
 - **API Versioning**
 - **Pagination**
 - **Idempotency**
+- **Idempotency Keys**
 - **API Rate Limiting**
+- **Request Deduplication**
+- **Retry Semantics**
 
 ### Optional — Later
 
@@ -169,9 +226,10 @@
 - **GraphQL Federation**
 - **Advanced Service Mesh Concepts**
 
+
 ---
 
-## Step 8: Message Queues & Event-Driven Systems
+## Step 9: Message Queues & Event-Driven Systems
 
 - **Why Message Queues?**
 - **Producer / Consumer**
@@ -184,11 +242,20 @@
   - At-most-once
   - At-least-once
   - Exactly-once — practical limitations
+
 - **Retries**
 - **Dead Letter Queues**
 - **Consumer Groups**
 - **Backpressure**
+- **Batch Processing**
+- **Chunking**
+- **Fan-out**
+- **Fan-in**
+- **Scatter-Gather**
+- **Idempotent Consumers**
 - **Event-Driven Architecture**
+- **Outbox Pattern**
+- **Inbox Pattern**
 
 ### Optional — Later
 
@@ -199,9 +266,10 @@
 - **Advanced Stream Processing**
 - **Advanced Event-Driven Architecture**
 
+
 ---
 
-## Step 9: Reliability & Fault Tolerance
+## Step 10: Reliability & Fault Tolerance
 
 - **Timeouts**
 - **Retries**
@@ -216,14 +284,16 @@
 - **Load Shedding**
 - **Backpressure**
 - **Idempotency**
+- **Duplicate Request Handling**
 - **Disaster Recovery**
 - **Backup & Restore**
 - **RPO**
 - **RTO**
 
+
 ---
 
-## Step 10: Scalability & Architecture
+## Step 11: Scalability & Architecture
 
 - **Monolith**
 - **Modular Monolith**
@@ -246,12 +316,38 @@
 - **Sidecar Pattern**
 - **Advanced Microservice Deployment Strategies**
 
+
 ---
 
-## Step 11: Search & Specialized Infrastructure
+## Step 12: Cloud Architecture Fundamentals
+
+- **Regions**
+- **Availability Zones**
+- **Multi-AZ Architecture**
+- **Multi-Region Architecture**
+- **Autoscaling**
+- **Object Storage**
+- **Managed Databases**
+- **Managed Queues**
+- **CDN**
+- **DNS-based Traffic Routing**
+- **Disaster Recovery Across Regions**
+
+### Optional — Later
+
+- **Advanced Cloud Networking**
+- **Advanced Kubernetes**
+- **Infrastructure as Code**
+- **Multi-Cloud Architecture**
+
+
+---
+
+## Step 13: Search & Specialized Infrastructure
 
 - **Search Engines**
   - Elasticsearch / OpenSearch
+
 - **Inverted Index**
 - **Full-text Search**
 - **Autocomplete**
@@ -268,9 +364,10 @@
 - **Advanced Geospatial Systems**
 - **Distributed Search Internals**
 
+
 ---
 
-## Step 12: Networking for Distributed Applications
+## Step 14: Networking for Distributed Applications
 
 - **TCP vs UDP**
 - **HTTP/1.1 vs HTTP/2 vs HTTP/3**
@@ -287,9 +384,10 @@
 - **QUIC Internals**
 - **Advanced Network Protocols**
 
+
 ---
 
-## Step 13: Observability
+## Step 15: Observability
 
 - **Logging**
 - **Metrics**
@@ -314,9 +412,10 @@
 - **Log Aggregation Internals**
 - **Advanced Observability Platforms**
 
+
 ---
 
-## Step 14: Security
+## Step 16: Security
 
 - **Authentication vs Authorization**
 - **Session-based Authentication**
@@ -330,6 +429,7 @@
 - **Encryption**
   - At Rest
   - In Transit
+
 - **TLS**
 - **Secrets Management**
 - **API Security**
@@ -339,6 +439,7 @@
   - CSRF
   - SQL Injection
   - SSRF
+
 - **Password Hashing**
 
 ### Optional — Later
@@ -351,9 +452,31 @@
 - **Web Application Firewall (WAF)**
 - **Advanced Security Architecture**
 
+
 ---
 
-## Step 15: System Design Trade-offs
+## Step 17: Distributed Data & Processing Patterns
+
+- **Idempotency Keys**
+- **Deduplication**
+- **Distributed Counters**
+- **Distributed Sequences**
+- **Batch Processing**
+- **Chunking**
+- **Fan-out**
+- **Fan-in**
+- **Scatter-Gather**
+- **Work Queues**
+- **Backpressure**
+- **Hot Keys**
+- **Hot Rows**
+- **Data Locality**
+- **Request Coalescing**
+
+
+---
+
+## Step 18: System Design Trade-offs
 
 - **Consistency vs Availability**
 - **Latency vs Throughput**
@@ -370,20 +493,29 @@
 - **Availability vs Cost**
 - **Complexity vs Scalability**
 - **Build vs Buy**
+- **Consistency vs Latency**
+- **Performance vs Simplicity**
+
 
 ---
 
-## Step 16: Back-of-the-Envelope Calculations
+## Step 19: Back-of-the-Envelope Calculations
 
 - **QPS Estimation**
 - **Peak QPS**
+- **Requests/day → QPS**
 - **Storage Estimation**
+- **Storage Growth**
 - **Bandwidth Estimation**
 - **Memory Estimation**
 - **Replication Storage**
 - **Cache Size Estimation**
 - **Capacity Planning**
 - **Latency Budget**
+- **Server Capacity Estimation**
+- **Availability Calculations**
+- **Replication Factor**
+- **Cost Estimation**
 
 ### Basic Units
 
@@ -396,15 +528,16 @@
 - GB/day
 - TB/year
 
+
 ---
 
-## Step 17: Real System Design Practice
+## Step 20: Real System Design Practice
 
 ### Beginner
 
 - **✅ URL Shortener**
 - **Pastebin**
-- **Rate Limiter**
+- **✅ Rate Limiter**
 - **✅ Notification Service**
 - **File Upload Service**
 - **Distributed ID Generator**
@@ -419,6 +552,9 @@
 - **Ride Booking System**
 - **Google Drive / Dropbox**
 - **Social Media Feed**
+- **Job Scheduling System**
+- **Restaurant Ordering System**
+- **Multi-Tenant SaaS System**
 
 ### Advanced
 
@@ -432,6 +568,9 @@
 - **Airbnb / Booking.com**
 - **Distributed Logging System**
 - **Large-scale Notification System**
+- **Distributed Job Queue**
+- **Large-scale Analytics System**
+- **Multi-Region SaaS System**
 
 ### System Design Process
 
@@ -448,10 +587,49 @@ For every problem:
 9. **Caching**
 10. **Asynchronous Processing**
 11. **Scaling**
-12. **Failure Scenarios**
-13. **Security**
-14. **Monitoring**
-15. **Trade-offs**
+12. **Bottleneck Identification**
+13. **Failure Scenarios**
+14. **Consistency Requirements**
+15. **Security**
+16. **Observability**
+17. **Trade-offs**
+18. **Cost Considerations**
+
+### Failure Analysis
+
+For every important component ask:
+
+- What happens if it goes down?
+- What happens if the network fails?
+- What happens if the request is duplicated?
+- What happens if a dependency becomes slow?
+- What happens if traffic suddenly increases?
+- What happens if data becomes inconsistent?
+- How do we recover?
+
+
+---
+
+## Step 21: System Design Interview Skills
+
+- **Requirement Clarification**
+- **Identifying Constraints**
+- **Making Explicit Assumptions**
+- **Estimating Scale Quickly**
+- **Choosing Reasonable Defaults**
+- **Designing the Simplest Working Architecture First**
+- **Identifying Bottlenecks**
+- **Explaining Trade-offs**
+- **Failure Analysis**
+- **Capacity Planning**
+- **Drawing Architecture Clearly**
+- **Explaining Architecture Verbally**
+- **Handling Follow-up Questions**
+- **Defending Design Decisions**
+- **Knowing When NOT to Use a Technology**
+- **Prioritizing Requirements**
+- **Iteratively Scaling the Design**
+
 
 ---
 
@@ -467,6 +645,7 @@ For every problem:
 - **SOLID Principles**
 - **Dependency Injection**
 - **Cohesion & Coupling**
+
 
 ---
 
@@ -507,6 +686,7 @@ For every pattern, understand:
 - **When not to use it?**
 - **Alternative approaches**
 
+
 ---
 
 ## Step 3: Concurrency & Thread Safety
@@ -525,6 +705,7 @@ For every pattern, understand:
 - **Thread Pools**
 - **Async Programming**
 - **Synchronization**
+
 
 ---
 
@@ -546,6 +727,7 @@ For every pattern, understand:
 - **Avoiding God Classes**
 - **Separation of Concerns**
 
+
 ---
 
 ## Step 5: Database Design
@@ -559,6 +741,8 @@ For every pattern, understand:
 - **Transactions**
 - **Locking**
 - **Database Migrations**
+- **Optimistic vs Pessimistic Locking**
+
 
 ---
 
@@ -578,6 +762,7 @@ For every pattern, understand:
 
 > Focus on communicating design clearly rather than becoming a UML specialist.
 
+
 ---
 
 ## Step 7: Testing
@@ -594,6 +779,7 @@ For every pattern, understand:
 - **Property-based Testing**
 - **Mutation Testing**
 - **Advanced Test Architecture**
+
 
 ---
 
@@ -624,9 +810,16 @@ For every pattern, understand:
 - **Payment System**
 - **File Storage System**
 
+
 ---
 
 # Execution Strategy
+
+## Core Learning Loop
+
+**Learn → Understand Why → Implement a Small Version → Design a Large-Scale Version → Find Bottlenecks → Redesign → Explain Aloud**
+
+### Rules
 
 - **Learn → Implement a small version → Design a large-scale version**
 - **Understand "Why" before "What"**
@@ -635,6 +828,17 @@ For every pattern, understand:
 - **Use real-world systems as examples**
 - **Practice designing systems from requirements**
 - **Use your own projects to practice scaling**
+- **Design the simplest architecture first**
+- **Only add complexity when a requirement justifies it**
+- **Practice failure scenarios, not just the happy path**
+- **Practice explaining your design aloud**
+
+## Recommended Learning Ratio
+
+- **30% → Learn concepts**
+- **20% → Implement small examples**
+- **50% → Design systems and solve case studies**
+
 
 ## Recommended Mindset
 
@@ -644,7 +848,8 @@ Don't learn system design as:
 
 Learn it as:
 
-> **"I have a problem. What constraints does it have? What architecture solves it? What are the trade-offs?"**
+> **"I have a problem. What constraints does it have? What architecture solves it? What are the trade-offs? What can fail?"**
+
 
 ## Before Designing Any System
 
@@ -660,6 +865,7 @@ Ask:
 - What are the failure scenarios?
 - What are the security requirements?
 - What are the cost constraints?
+- What are the scaling requirements?
 
 Then define:
 
@@ -669,3 +875,51 @@ Then define:
 - **Constraints**
 
 Only then design the architecture.
+
+
+## For Every Technology
+
+Understand:
+
+1. **What problem does it solve?**
+2. **Why is the problem difficult?**
+3. **How does the technology solve it?**
+4. **What are its advantages?**
+5. **What are its disadvantages?**
+6. **When should I use it?**
+7. **When should I NOT use it?**
+8. **What happens when it fails?**
+9. **What are the alternatives?**
+10. **What trade-offs does it introduce?**
+
+
+## For Every System Design Problem
+
+Start simple:
+
+```text
+Requirements
+    ↓
+Scale Estimation
+    ↓
+API Design
+    ↓
+Data Model
+    ↓
+Basic Architecture
+    ↓
+Identify Bottlenecks
+    ↓
+Scale the Bottleneck
+    ↓
+Handle Failures
+    ↓
+Add Reliability
+    ↓
+Add Observability
+    ↓
+Security
+    ↓
+Trade-offs
+    ↓
+Cost
