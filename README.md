@@ -1,5 +1,45 @@
 # System Design Roadmap
 
+## Repository Coverage
+
+The roadmap below describes the learning path. These are the main interview-ready notes currently available:
+
+### Fundamentals
+
+- [Processes vs Threads](fundamentals/processes_and_threads.md)
+- [Concurrency vs Parallelism](fundamentals/concurrency_parallelism.md)
+- [Horizontal vs Vertical Scaling](fundamentals/scaling.md)
+- [Stateless vs Stateful](fundamentals/stateless_vs_stateful.md)
+- [Latency vs Throughput](fundamentals/latency_throughput.md)
+- [Availability, Reliability, and Scalability](fundamentals/availability_reliability_scalability.md)
+
+### Databases
+
+- [Relational Database Fundamentals](databases/relational_database_fundamentals.md)
+- [SQL vs NoSQL](databases/sql_vs_nosql.md)
+- [Transactions and Isolation](databases/transactions_and_isolation.md)
+- [MVCC, Locks, and Deadlocks](databases/mvcc_locks_and_deadlocks.md)
+- [Optimistic vs Pessimistic Locking](databases/optimistic_vs_pessimistic_locking.md)
+- [Replication](databases/replication.md)
+- [Partitioning and Sharding](databases/partitioning_and_sharding.md)
+- [Connection Pooling](databases/connection_pooling.md)
+- [Migrations and Schema Changes](databases/migrations_and_schema_changes.md)
+
+### Distributed Systems
+
+- [Consistency](distributed_systems/consistency.md)
+- [Replication and Quorums](distributed_systems/replication_and_quorums.md)
+- [Leader Election and Consensus](distributed_systems/leader_election_and_consensus.md)
+- [Distributed Locks](distributed_systems/distributed_locks.md)
+- [Distributed Transactions](distributed_systems/distributed_transactions.md)
+- [Failure Models and Network Partitions](distributed_systems/failure_models_and_network_partitions.md)
+- [Time, Ordering, and Clocks](distributed_systems/time_ordering_and_clocks.md)
+- [Trade-offs](distributed_systems/tradeoffs.md)
+
+### System Design Exercises
+
+Use [the exercise template](systems/000_system_design_exercise_template.md) for new problems. Current practice problems are listed in [systems/](systems/).
+
 # High-Level Design (HLD)
 
 ## Step 1: Fundamentals
