@@ -152,3 +152,5 @@ The frontend would initially receive a payment ID with a `PROCESSING` status and
 
 
 The Transactional **Outbox Pattern** ensures reliable event publishing by storing business data and the corresponding event in the same database transaction. A separate publisher reads the Outbox table and sends events to a message broker. This prevents events from being lost if the message broker is temporarily unavailable.
+
+"I would use both. Event-driven reconciliation handles individual payments with uncertain outcomes quickly, while a scheduled global reconciliation job acts as a safety net to catch missed events, mismatches, or inconsistencies between our database and bank records."
